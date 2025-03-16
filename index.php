@@ -3,16 +3,20 @@
 declare(strict_types=1);
 
 // 解析配置文件
-$env = parse_ini_file('.env', false, INI_SCANNER_TYPED) ?: [];
+function getConfig() {
+    $env = parse_ini_file('.env', false, INI_SCANNER_TYPED) ?: [];
+    
+    return $env;
+}
 
 // 结构化配置
 $config = [
     'app' => [
-        'site' => $env['APP_SITE'] ?? '',
-        'ga_id' => $env['GA_ID'] ?? '',
+        'site' => getConfig()['APP_SITE'] ?? '',
+        'ga_id' => getConfig()['GA_ID'] ?? '',
     ],
     'cors' => [
-        'allowOrigins' => ['http://example.com', parse_url($env['APP_SITE'] ?? '', PHP_URL_HOST) ?? ''],
+        'allowOrigins' => ['http://example.com', parse_url(getConfig()['APP_SITE'] ?? '', PHP_URL_HOST) ?? ''],
         'allowMethods' => 'GET',
     ],
     'cache' => [
@@ -49,7 +53,7 @@ function getService(string $name) {
 // 注册服务
 $services = [
     'logger' => fn() => LoggerFactory::createDevelopmentLogger(__DIR__),
-    'db' => fn() => DatabaseConnection::getInstance($env),
+    'db' => fn() => DatabaseConnection::getInstance(getConfig()),
     'themify' => fn() => Themify::getInstance(),
 ];
 
@@ -64,11 +68,13 @@ $lastPushTime = time();
 /* 
 // 尝试从APCu获取
 $success = false;
-$cacheData = apcu_fetch($cacheKey, $success);
+$cacheKey = 'cacheCounter';
+$cacheCounter = apcu_fetch($cacheKey, $success);
 if (!$success) {
+
 }                
 // 更新缓存
-apcu_store($cacheKey, $cacheData, 3600);
+apcu_store($cacheKey, $cacheCounter, 3600);
 */
 
 // 路由处理
@@ -178,6 +184,10 @@ function applyMiddleware(callable $handler, array $middlewares): mixed {
 
 // 展示首页
 function renderIndex(string $site, string|int $ga_id): void {
+    if(getConfig()['REWRITE_ENABLED'] == false) {
+        
+    }
+
     $themify = getService('themify');
     $themeList = $themify->loadThemes();
     include 'views/index.php';

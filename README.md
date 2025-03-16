@@ -1,4 +1,5 @@
-# MoeCounter-PHP
+## MoeCounter-PHP
+
 Moe-counter 的 PHP 实现版本。
 
 原项目：
@@ -11,3 +12,8 @@ Moe-counter 的 PHP 实现版本。
 代码水平有限，业余时间有限，若有发现诸多问题还望海涵。
 
 当然，项目已经可以运行🙃。
+
+## 公益
+### 让世界更绿色🌴
+
+为更美好的地球做出贡献[**给世界买一棵树**](https://ecologi.com/)

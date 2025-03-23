@@ -184,8 +184,10 @@ function applyMiddleware(callable $handler, array $middlewares): mixed {
 
 // 展示首页
 function renderIndex(string $site, string|int $ga_id): void {
+    $static_site = false;
     if(getConfig()['REWRITE_ENABLED'] == false) {
-        
+        $static_site = $site;    
+        $site = $site . '/index.php';
     }
 
     $themify = getService('themify');

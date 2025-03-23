@@ -1,6 +1,7 @@
 <?php
 // Define variables (you'll likely pass these from a configuration or controller)
 $site = isset($site) ? $site : 'https://example.com';
+$static_site = $static_site ?: $site;
 $ga_id = isset($ga_id) ? $ga_id : null;
 $themeList = isset($themeList) ? $themeList : [];
 ?>
@@ -9,10 +10,10 @@ $themeList = isset($themeList) ? $themeList : [];
 <head>
     <title>Moe Counter!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="image/png" href="<?php echo $site; ?>/assets/favicon.png">
+    <link rel="icon" type="image/png" href="<?php echo $static_site; ?>/assets/favicon.png">
     <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/normalize.css">
     <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bamboo.css">
-    <link rel="stylesheet/less" href="<?php echo $site; ?>/assets/style.less">
+    <link rel="stylesheet/less" href="<?php echo $static_site; ?>/assets/style.less">
     <script src="https://fastly.jsdelivr.net/npm/less"></script>
 
     <?php if ($ga_id): ?>
@@ -186,6 +187,6 @@ $themeList = isset($themeList) ? $themeList : [];
     <div class="back-to-top"></div>
 
     <script async src="https://fastly.jsdelivr.net/npm/party-js@2/bundle/party.min.js"></script>
-    <script async src="<?php echo $site; ?>/assets/script.js"></script>
+    <script async src="<?php echo $static_site; ?>/assets/script.js"></script>
 </body>
 </html>
